@@ -21,7 +21,7 @@ private:
     ros::NodeHandle nh_private_;
 
     ros::Publisher control_cmd_pub_, uav_command_pub;
-    ros::Subscriber odom_sub_, desired_states_sub_, uav_control_state_sub;
+    ros::Subscriber odom_sub_, desired_states_sub_;
     ros::Timer cmd_pub_timer_;
 
     //parameters for controller
@@ -31,12 +31,10 @@ private:
     Eigen::Vector3d desired_pos_, desired_vel_, desired_acc_;
     Eigen::Quaterniond desired_orient_; 
     double desired_yaw_;
-    float takeoff_height;
     GeometricController geometricController_;
     bool states_cmd_updated_, states_cmd_init_;
     prometheus_msgs::UAVCommand uav_command;
     prometheus_msgs::UAVState uav_state;
-    prometheus_msgs::UAVControlState uav_control_state;
 
 public:
     GeometricControllerNode(const ros::NodeHandle &nh, const ros::NodeHandle &nh_private);

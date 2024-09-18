@@ -1,0 +1,2 @@
+Robomaster-uav-competition/plan_and_control:Robomaster-uav-competition/prometheus_msgs:Robomaster-uav-competition/tracking_controller:Robomaster-uav-competition/trajectory_generator:Robomaster-uav-competition/uav_msgs
+-DCATKIN_WHITELIST_PACKAGES= -DCATKIN_DEVEL_PREFIX=/home/ros20/amov_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ros20/amov_ws/install -G Unix Makefiles

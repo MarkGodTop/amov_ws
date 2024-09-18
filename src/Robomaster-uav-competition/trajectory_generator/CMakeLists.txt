@@ -9,7 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
 )
-
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIRS})
 catkin_package(
   INCLUDE_DIRS include
   #LIBRARIES trajectory_generator

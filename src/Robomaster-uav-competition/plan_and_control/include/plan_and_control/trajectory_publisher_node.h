@@ -7,7 +7,8 @@
 #include <visualization_msgs/Marker.h>
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/PoseStamped.h>
-
+#include <prometheus_msgs/UAVControlState.h>
+#include <prometheus_msgs/UAVCommand.h>
 //other utils
 #include <vector>
 #include <memory>
@@ -26,12 +27,12 @@ private:
 
     ros::Publisher desiredStates_pub_, traj_vis_pub_, cmd_vis_pub_;
     ros::Publisher desiredPose_pub_, currentPose_pub_;
-    ros::Subscriber odom_sub_;
+    ros::Subscriber odom_sub_, uav_control_state_sub;
     ros::ServiceClient takeoff_client_;
     uav_msgs::DesiredStates cmd_;
     nav_msgs::OdometryConstPtr odom_;
     geometry_msgs::PoseStamped desiredPose_, currentPose_;
-
+    prometheus_msgs::UAVControlState uav_control_state;
     //parameters for planner
     Eigen::Vector3d odom_pos_, odom_vel_;
     Eigen::Quaterniond odom_orient_;
@@ -46,7 +47,7 @@ private:
     ros::Time finalTime_ ;
     int segment_num_;
     double trajDuration_;
-
+    float takeoff_height;
     double startYaw_, finalYaw_;
 
     shared_ptr<TrajectoryGeneratorWaypoints> trajPlanWaypoints_ = make_shared<TrajectoryGeneratorWaypoints>();

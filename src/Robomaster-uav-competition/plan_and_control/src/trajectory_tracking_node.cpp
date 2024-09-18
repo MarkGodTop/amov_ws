@@ -4,7 +4,7 @@ GeometricControllerNode::GeometricControllerNode(const ros::NodeHandle &nh, cons
     : nh_(nh), nh_private_(nh_private), states_cmd_updated_(false),states_cmd_init_(false) {
     //创建无人机控制命令发布者
     uav_command_pub = 
-        nh.advertise<prometheus_msgs::UAVCommand>("/uav1/prometheus/command", 10);
+        nh_.advertise<prometheus_msgs::UAVCommand>("/uav1/prometheus/command", 10);
     odom_sub_ =
         nh_.subscribe<nav_msgs::Odometry>("/uav1/prometheus/odom",1, &GeometricControllerNode::odomCallback,this);
     desired_states_sub_ =
@@ -21,7 +21,6 @@ GeometricControllerNode::GeometricControllerNode(const ros::NodeHandle &nh, cons
     nh_private_.getParam("attitude_gain/y", geometricController_.attitude_gain_.y());
     nh_private_.getParam("attitude_gain/z", geometricController_.attitude_gain_.z());
     nh_private_.getParam("vehicle_mass", geometricController_.vehicle_mass_);
-    nh_private_.getParam("takeoff_height", takeoff_height);
     
 }
 

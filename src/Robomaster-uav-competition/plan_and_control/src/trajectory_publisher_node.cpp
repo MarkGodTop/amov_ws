@@ -8,7 +8,7 @@ TrajectoryPublisherNode::TrajectoryPublisherNode(const ros::NodeHandle &nh, cons
         nh_.subscribe<nav_msgs::Odometry>("/uav1/prometheus/odom",1, &TrajectoryPublisherNode::odomCallback,this);
     //创建无人机控制状态命令订阅者
     uav_control_state_sub = 
-        nh.subscribe<prometheus_msgs::UAVControlState>("/uav1/prometheus/control_state", 10, &GeometricControllerNode::uav_control_state_cb, this);
+        nh_.subscribe<prometheus_msgs::UAVControlState>("/uav1/prometheus/control_state", 10, &TrajectoryPublisherNode::uav_control_state_cb, this);
     desiredStates_pub_ = 
         nh_.advertise<uav_msgs::DesiredStates>("/reference/desiredStates", 50);
     traj_vis_pub_ = nh_.advertise<visualization_msgs::Marker>("/trajectory_vis", 10);
@@ -21,6 +21,7 @@ TrajectoryPublisherNode::TrajectoryPublisherNode(const ros::NodeHandle &nh, cons
     nh_private_.getParam("max_vel", max_vel_);
     nh_private_.getParam("max_acc", max_acc_);
     nh_private_.getParam("waypoint_num", waypoint_num_);
+    nh_private_.getParam("takeoff_height", takeoff_height);
     waypoints_.resize(waypoint_num_, 3);
     cout << "waypoint number:" << waypoint_num_ << endl;
 
@@ -39,7 +40,7 @@ TrajectoryPublisherNode::TrajectoryPublisherNode(const ros::NodeHandle &nh, cons
 TrajectoryPublisherNode::~TrajectoryPublisherNode() {}
 
 //无人机控制状态回调函数
-void GeometricControllerNode::uav_control_state_cb(const prometheus_msgs::UAVControlState::ConstPtr &msg){
+void TrajectoryPublisherNode::uav_control_state_cb(const prometheus_msgs::UAVControlState::ConstPtr &msg){
     uav_control_state = *msg;
 }
 
